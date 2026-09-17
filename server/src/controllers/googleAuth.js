@@ -45,6 +45,7 @@ const googleAuth = async (req, res) => {
       user: { email: user.email, googleId: user.googleId, name: user.name },
     });
   } catch (err) {
+    console.log(err);
     return res.status(500).json({ message: "Internal server error" });
   }
 };

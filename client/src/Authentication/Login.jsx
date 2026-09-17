@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import Cookies from "js-cookie";
 import api from "../api/axiosInstance";
-import GoogleAuthButton from "../components/GoogleAuthButton";
+import GoogleAuthButton from "../Authentication/GoogleAuthButton";
 
 const Login = () => {
   const [userDetails, setUserDetails] = useState({ email: "", password: "" });

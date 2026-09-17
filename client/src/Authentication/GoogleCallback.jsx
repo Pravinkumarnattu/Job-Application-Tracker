@@ -1,11 +1,14 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import api from "../api/axiosInstance";
 
 const GoogleCallback = () => {
   const navigate = useNavigate();
+  const hasRun = useRef(false);
   useEffect(() => {
+    if (hasRun.current) return;
+    hasRun.current = true;
     const queryParams = new URLSearchParams(window.location.search);
     const authCode = queryParams.get("code");
     if (!authCode) {

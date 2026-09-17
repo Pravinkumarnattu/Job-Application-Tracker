@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import api from "../api/axiosInstance";
-import GoogleAuthButton from "../components/GoogleAuthButton";
+import GoogleAuthButton from "../Authentication/GoogleAuthButton";
 
 const Register = () => {
   const [userDetails, setUserDetails] = useState({ name: "", email: "", password: "" });
