@@ -3,6 +3,8 @@ import { useNavigate, Link } from "react-router-dom";
 import Cookies from "js-cookie";
 import api from "../api/axiosInstance";
 import GoogleAuthButton from "../Authentication/GoogleAuthButton";
+import "./Login.css";
+import "./Auth.css";
 
 const Login = () => {
   const [userDetails, setUserDetails] = useState({ email: "", password: "" });
@@ -25,34 +27,44 @@ const Login = () => {
   };
 
   return (
-    <form onSubmit={handleLogin}>
-      <input
-        type="email"
-        placeholder="Email"
-        value={userDetails.email}
-        onChange={(e) =>
-          setUserDetails({ ...userDetails, email: e.target.value })
-        }
-        required
-      />
-      <input
-        type="password"
-        placeholder="Password"
-        value={userDetails.password}
-        onChange={(e) =>
-          setUserDetails({ ...userDetails, password: e.target.value })
-        }
-        required
-      />
-      <button type="submit" disabled={loading}>
-        {loading ? "Logging in..." : "Login"}
-      </button>
-      <GoogleAuthButton />
-      {errMsg && <p>{errMsg}</p>}
-      <p>
-        Don't have an account? <Link to="/register">Register</Link>
-      </p>
-    </form>
+    <div className="login-container">
+      <h1 className="title-head">Job Application Tracker</h1>
+      <div className="auth-card-wrapper">
+        <h1 className="auth-head">Log in to your account</h1>
+        <GoogleAuthButton />
+        <div className="horizontal">
+          <hr className="left" /> Or with email and password
+          <hr className="right" />
+        </div>
+        <form onSubmit={handleLogin} className="login-form">
+          <input
+            type="email"
+            placeholder="Email"
+            value={userDetails.email}
+            onChange={(e) =>
+              setUserDetails({ ...userDetails, email: e.target.value })
+            }
+            required
+          />
+          <input
+            type="password"
+            placeholder="Password"
+            value={userDetails.password}
+            onChange={(e) =>
+              setUserDetails({ ...userDetails, password: e.target.value })
+            }
+            required
+          />
+          <button type="submit" disabled={loading} className="login-button">
+            {loading ? "Logging in..." : "Login"}
+          </button>
+          {errMsg && <p className="err-msg">{errMsg}</p>}
+          <p className="no-account">
+            Don't have an account? <Link to="/register">Register</Link>
+          </p>
+        </form>
+      </div>
+    </div>
   );
 };
 

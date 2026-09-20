@@ -1,9 +1,9 @@
 const jwt = require("jsonwebtoken");
-const User = require("../models/User");
+const User = require("../../models/User");
 const {
   exchangeCodeForTokens,
   getGoogleUserProfile,
-} = require("../services/googleOAuthService");
+} = require("../../services/googleOAuthService");
 
 const googleAuth = async (req, res) => {
   try {

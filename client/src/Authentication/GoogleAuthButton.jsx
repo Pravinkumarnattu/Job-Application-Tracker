@@ -1,3 +1,5 @@
+import { FcGoogle } from "react-icons/fc";
+
 const GoogleAuthButton = () => {
   const handleGoogleAuth = () => {
     const params = new URLSearchParams({
@@ -10,7 +12,12 @@ const GoogleAuthButton = () => {
     });
     window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?${params.toString()}`;
   };
-  return <button onClick={handleGoogleAuth}>Continue with Google</button>;
+  return (
+    <button onClick={handleGoogleAuth} className="google-auth-button">
+      <FcGoogle size={20} />
+      Continue with Google
+    </button>
+  );
 };
 
 export default GoogleAuthButton;
