@@ -5,6 +5,7 @@ import Login from "./Authentication/Login";
 import Register from "./Authentication/Register";
 import ProtectedRoute from "./ProtectedRoute";
 import Dashboard from "./Dashboard/DashboardHome";
+import AddApplication from "./Dashboard/Applications/AddApplication";
 import "./App.css";
 
 const App = () => {
@@ -20,6 +21,14 @@ const App = () => {
           element={
             <ProtectedRoute>
               <Dashboard />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/application"
+          element={
+            <ProtectedRoute>
+              <AddApplication />
             </ProtectedRoute>
           }
         />

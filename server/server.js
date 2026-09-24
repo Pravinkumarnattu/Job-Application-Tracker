@@ -19,6 +19,8 @@ app.get("/", (req, res) => {
 
 app.use("/api/auth", require("./src/routes/authRoutes"));
 
+app.use("/api/application", )
+
 
 connectDB();
 app.listen(process.env.PORT || 5000, () => {
