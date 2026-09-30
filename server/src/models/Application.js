@@ -4,19 +4,20 @@ const applicationSchema = new mongoose.Schema(
   {
     company: {
       type: String,
-      required,
+      required: true,
     },
     role: {
       type: String,
-      required,
+      required: true,
     },
     status: {
+      type: String,
       enum: ["applied", "interviewing", "offer", "rejected"],
       default: "applied",
     },
     dateApplied: {
       type: Date,
-      required,
+      required: true,
     },
     jobLink: {
       type: String,
@@ -33,7 +34,7 @@ const applicationSchema = new mongoose.Schema(
     userId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
-      required,
+      required: true,
     },
   },
   { timestamps: true },

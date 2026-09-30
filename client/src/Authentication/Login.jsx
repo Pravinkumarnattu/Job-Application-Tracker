@@ -18,6 +18,7 @@ const Login = () => {
       setLoading(true);
       const response = await api.post("/auth/login", userDetails);
       Cookies.set("jwt_token", response?.data?.token, { expires: 7 });
+      Cookies.set("user", JSON.stringify(response?.data?.user), { expires: 7 });
       navigate("/dashboard", { replace: true });
     } catch (err) {
       setErrMsg(err?.response?.data?.message || "Something went wrong");

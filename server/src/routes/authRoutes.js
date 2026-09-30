@@ -5,4 +5,6 @@ router.post("/google", require("../controllers/authentication/googleAuth"));
 router.post("/login", require("../controllers/authentication/login"));
 router.post("/register", require("../controllers/authentication/register"));
 
+router.get("/me", require("../middleware/auth"), require("../controllers/profile"));
+
 module.exports = router;

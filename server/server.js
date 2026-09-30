@@ -17,10 +17,10 @@ app.get("/", (req, res) => {
   res.send("Server running successfully");
 });
 
+//Authentication
 app.use("/api/auth", require("./src/routes/authRoutes"));
 
-app.use("/api/application", )
-
+app.use("/api/application", require("./src/routes/applicationRoutes"));
 
 connectDB();
 app.listen(process.env.PORT || 5000, () => {

@@ -1,0 +1,255 @@
+/* ========================================
+   SIDEBAR
+======================================== */
+
+.sidebar {
+  width: 250px;
+  min-width: 250px;
+  height: 100vh;
+
+  position: sticky;
+  top: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  padding: 24px 16px;
+
+  background: #172033;
+  border-right: 1px solid #2d3a50;
+
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  z-index: 100;
+}
+
+/* ========================================
+   APP NAME / LOGO
+======================================== */
+
+.app-name-logo {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+
+  height: 45px;
+  margin: 0 8px 30px;
+}
+
+.sidebar-logo {
+  width: 34px;
+  height: 34px;
+  object-fit: contain;
+}
+
+.app-name {
+  margin: 0;
+
+  color: #f8fafc;
+  font-size: 21px;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+}
+
+/* ========================================
+   NAVIGATION
+======================================== */
+
+.sidebar-link {
+  width: 100%;
+  min-height: 46px;
+
+  display: flex;
+  align-items: center;
+  gap: 13px;
+
+  padding: 0 13px;
+  margin-bottom: 6px;
+
+  color: #aeb9ca;
+  background: transparent;
+
+  border: 1px solid transparent;
+  border-radius: 8px;
+
+  text-decoration: none;
+
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.sidebar-link svg {
+  flex-shrink: 0;
+  color: #8d9ab0;
+
+  transition: color 0.2s ease;
+}
+
+/* Navigation Hover */
+
+.sidebar-link:hover {
+  background: #243149;
+  border-color: #33425b;
+  color: #ffffff;
+}
+
+.sidebar-link:hover svg {
+  color: #60a5fa;
+}
+
+/* Active Navigation */
+
+.sidebar-link.active {
+  background: #29466f;
+  border-color: #365b8c;
+  color: #ffffff;
+
+  font-weight: 600;
+}
+
+.sidebar-link.active svg {
+  color: #60a5fa;
+}
+
+/* ========================================
+   LOGOUT
+======================================== */
+
+.sidebar-logout {
+  width: 100%;
+  min-height: 46px;
+
+  display: flex;
+  align-items: center;
+  gap: 13px;
+
+  margin-top: auto;
+  padding: 0 13px;
+
+  background: #303a4c;
+  border: 1px solid #455166;
+  border-radius: 8px;
+
+  color: #cbd5e1;
+
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+
+  cursor: pointer;
+  text-align: left;
+
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.sidebar-logout svg {
+  flex-shrink: 0;
+  color: #aeb9ca;
+
+  transition: color 0.2s ease;
+}
+
+/* Logout Hover */
+
+.sidebar-logout:hover {
+  background: #465267;
+  border-color: #5c687d;
+  color: #ffffff;
+}
+
+.sidebar-logout:hover svg {
+  color: #ffffff;
+}
+
+/* ========================================
+   MOBILE HEADER
+======================================== */
+
+.mobile-header {
+  display: none;
+}
+
+/* ========================================
+   MOBILE
+======================================== */
+
+@media (max-width: 768px) {
+  .mobile-header {
+    width: 100%;
+    height: 60px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0 18px;
+
+    background: #172033;
+    border-bottom: 1px solid #2d3a50;
+
+    position: sticky;
+    top: 0;
+    z-index: 200;
+  }
+
+  .mobile-logo {
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
+  }
+
+  .menu-btn {
+    width: 40px;
+    height: 40px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #303a4c;
+    border: 1px solid #455166;
+    border-radius: 7px;
+
+    color: #dbe3ee;
+
+    cursor: pointer;
+
+    transition:
+      background-color 0.2s ease,
+      border-color 0.2s ease;
+  }
+
+  .menu-btn:hover {
+    background: #465267;
+    border-color: #5c687d;
+  }
+
+  .sidebar {
+    width: 250px;
+    min-width: 250px;
+    height: calc(100vh - 60px);
+
+    position: fixed;
+    top: 60px;
+    left: 0;
+
+    transform: translateX(-100%);
+    transition: transform 0.25s ease;
+
+    box-shadow: 4px 0 14px rgba(15, 23, 42, 0.25);
+  }
+
+  .sidebar.show {
+    transform: translateX(0);
+  }
+}
