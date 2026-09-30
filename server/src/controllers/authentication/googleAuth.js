@@ -37,9 +37,13 @@ const googleAuth = async (req, res) => {
       await existingUserByGoogleId.save();
       user = existingUserByGoogleId;
     }
-    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
-      expiresIn: "7d",
-    });
+    const token = jwt.sign(
+      { id: user._id, name: user.name, email: user.email },
+      process.env.JWT_SECRET,
+      {
+        expiresIn: "7d",
+      },
+    );
     return res.status(200).json({
       token,
       user: { email: user.email, googleId: user.googleId, name: user.name },
