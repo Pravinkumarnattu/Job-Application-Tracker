@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import { FaCheck } from "react-icons/fa";
 import Cookies from "js-cookie";
 import api from "../api/axiosInstance";
 
@@ -29,7 +30,15 @@ const GoogleCallback = () => {
     };
     fetchUser();
   }, []);
-  return <div>Signing you in...</div>;
+  return (
+    <div className="signing-container">
+      <h1 className="brand-name">JobTrack</h1>
+      <main className="signin-card">
+        <FaCheck size={36} />
+        <h3>Signing in...</h3>
+      </main>
+    </div>
+  );
 };
 
 export default GoogleCallback;
