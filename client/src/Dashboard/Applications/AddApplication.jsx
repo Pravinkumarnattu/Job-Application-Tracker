@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import api from "../../api/axiosInstance";
+import "./AddApplication.css";
 
 const AddApplication = () => {
   const [applicationDetails, setApplicationDetails] = useState({
@@ -28,7 +29,7 @@ const AddApplication = () => {
     try {
       setLoading(true);
       setErrMsg("");
-      const response = await api.post("/applications/add", applicationDetails);
+      const response = await api.post("/application/add", applicationDetails);
       setApplicationDetails({
         company: "",
         role: "",
@@ -48,119 +49,117 @@ const AddApplication = () => {
   };
 
   return (
-    <div>
-      <form onSubmit={submitApplication}>
-        <label htmlFor="company">Company</label>
-        <input
-          type="text"
-          id="company"
-          value={applicationDetails.company}
-          onChange={(e) =>
-            setApplicationDetails({
-              ...applicationDetails,
-              company: e.target.value,
-            })
-          }
-          placeholder="Company name"
-          required
-        />
-        <label htmlFor="role">Role</label>
-        <input
-          type="text"
-          id="role"
-          value={applicationDetails.role}
-          onChange={(e) =>
-            setApplicationDetails({
-              ...applicationDetails,
-              role: e.target.value,
-            })
-          }
-          placeholder="Job title/position"
-          required
-        />
-        <label htmlFor="status">Status</label>
-        <select
-          id="status"
-          value={applicationDetails.status}
-          onChange={(e) =>
-            setApplicationDetails({
-              ...applicationDetails,
-              status: e.target.value,
-            })
-          }
-        >
-          <option value="applied">Applied</option>
-          <option value="interviewing">Interviewing</option>
-          <option value="offer">Offer</option>
-          <option value="rejected">Rejected</option>
-        </select>
-        <label htmlFor="dateApplied">Date Applied</label>
-        <input
-          type="date"
-          id="dateApplied"
-          value={applicationDetails.dateApplied}
-          onChange={(e) =>
-            setApplicationDetails({
-              ...applicationDetails,
-              dateApplied: e.target.value,
-            })
-          }
-          placeholder="Applied Date"
-          required
-        />
-        <label htmlFor="jobLink">
-          Job Link <span>(optional)</span>
-        </label>
-        <input
-          type="url"
-          id="jobLink"
-          value={applicationDetails.jobLink}
-          onChange={(e) =>
-            setApplicationDetails({
-              ...applicationDetails,
-              jobLink: e.target.value,
-            })
-          }
-          placeholder="https://..."
-        />
-        <label htmlFor="followUpDate">
-          Follow-up Date <span>(optional)</span>
-        </label>
-        <input
-          type="date"
-          id="followUpDate"
-          value={applicationDetails.followUpDate}
-          onChange={(e) =>
-            setApplicationDetails({
-              ...applicationDetails,
-              followUpDate: e.target.value,
-            })
-          }
-          placeholder="Follow Up Date"
-        />
-        <label htmlFor="notes">
-          Notes <span>(optional)</span>
-        </label>
-        <textarea
-          rows={5}
-          cols={30}
-          id="notes"
-          value={applicationDetails.notes}
-          onChange={(e) =>
-            setApplicationDetails({
-              ...applicationDetails,
-              notes: e.target.value,
-            })
-          }
-          placeholder="Add your notes here..."
-        />
-        <button type="submit" disabled={loading}>
-          {loading ? "Adding application" : "Add application"}
-        </button>
-        {successMsg && <p className="form-success">{successMsg}</p>}
-        {errMsg && <p className="form-error">{errMsg}</p>}
-      </form>
-    </div>
+    <form onSubmit={submitApplication} className="add-application">
+      <label htmlFor="company">Company</label>
+      <input
+        type="text"
+        id="company"
+        value={applicationDetails.company}
+        onChange={(e) =>
+          setApplicationDetails({
+            ...applicationDetails,
+            company: e.target.value,
+          })
+        }
+        placeholder="Company name"
+        required
+      />
+      <label htmlFor="role">Role</label>
+      <input
+        type="text"
+        id="role"
+        value={applicationDetails.role}
+        onChange={(e) =>
+          setApplicationDetails({
+            ...applicationDetails,
+            role: e.target.value,
+          })
+        }
+        placeholder="Job title/position"
+        required
+      />
+      <label htmlFor="status">Status</label>
+      <select
+        id="status"
+        value={applicationDetails.status}
+        onChange={(e) =>
+          setApplicationDetails({
+            ...applicationDetails,
+            status: e.target.value,
+          })
+        }
+      >
+        <option value="applied">Applied</option>
+        <option value="interviewing">Interviewing</option>
+        <option value="offer">Offer</option>
+        <option value="rejected">Rejected</option>
+      </select>
+      <label htmlFor="dateApplied">Date Applied</label>
+      <input
+        type="date"
+        id="dateApplied"
+        value={applicationDetails.dateApplied}
+        onChange={(e) =>
+          setApplicationDetails({
+            ...applicationDetails,
+            dateApplied: e.target.value,
+          })
+        }
+        placeholder="Applied Date"
+        required
+      />
+      <label htmlFor="jobLink">
+        Job Link <span>(optional)</span>
+      </label>
+      <input
+        type="url"
+        id="jobLink"
+        value={applicationDetails.jobLink}
+        onChange={(e) =>
+          setApplicationDetails({
+            ...applicationDetails,
+            jobLink: e.target.value,
+          })
+        }
+        placeholder="https://..."
+      />
+      <label htmlFor="followUpDate">
+        Follow-up Date <span>(optional)</span>
+      </label>
+      <input
+        type="date"
+        id="followUpDate"
+        value={applicationDetails.followUpDate}
+        onChange={(e) =>
+          setApplicationDetails({
+            ...applicationDetails,
+            followUpDate: e.target.value,
+          })
+        }
+        placeholder="Follow Up Date"
+      />
+      <label htmlFor="notes">
+        Notes <span>(optional)</span>
+      </label>
+      <textarea
+        rows={5}
+        cols={30}
+        id="notes"
+        value={applicationDetails.notes}
+        onChange={(e) =>
+          setApplicationDetails({
+            ...applicationDetails,
+            notes: e.target.value,
+          })
+        }
+        placeholder="Add your notes here..."
+      />
+      <button type="submit" disabled={loading} className="submit-btn">
+        {loading ? "Adding application" : "Add application"}
+      </button>
+      {successMsg && <p className="form-success">{successMsg}</p>}
+      {errMsg && <p className="form-error">{errMsg}</p>}
+    </form>
   );
 };
 

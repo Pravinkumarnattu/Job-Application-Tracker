@@ -2,7 +2,7 @@ const Application = require("../models/Application");
 
 const addApplication = async (req, res) => {
   const { company, role, status, dateApplied, jobLink, followUpDate, notes } =
-    res.body;
+    req.body;
   const applicationDetails = {
     company,
     role,
