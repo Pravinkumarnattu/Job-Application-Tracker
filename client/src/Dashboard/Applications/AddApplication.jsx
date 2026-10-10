@@ -29,7 +29,7 @@ const AddApplication = () => {
     try {
       setLoading(true);
       setErrMsg("");
-      const response = await api.post("/application/add", applicationDetails);
+      const response = await pi.post("/application/add", applicationDetails);
       setApplicationDetails({
         company: "",
         role: "",
@@ -42,7 +42,10 @@ const AddApplication = () => {
       setSuccessMsg(response?.data?.message);
     } catch (err) {
       console.error(err);
-      setErrMsg(err.response?.data?.message);
+      setErrMsg(
+        err.response?.data?.message ||
+          "Unable to add application. Please try again! ",
+      );
     } finally {
       setLoading(false);
     }

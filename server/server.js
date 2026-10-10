@@ -20,6 +20,7 @@ app.get("/", (req, res) => {
 //Authentication
 app.use("/api/auth", require("./src/routes/authRoutes"));
 
+//Applications
 app.use("/api/application", require("./src/routes/applicationRoutes"));
 
 connectDB();
