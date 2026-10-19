@@ -8,6 +8,7 @@ import ProtectedRoute from "./ProtectedRoute";
 import DashboardLayout from "./Dashboard/DashboardLayout";
 import DashboardHome from "./Dashboard/DashboardHome";
 import AddApplication from "./Dashboard/Applications/AddApplication";
+import ApplicationList from "./Dashboard/Applications/ApplicationList";
 
 import "./App.css";
 
@@ -30,8 +31,8 @@ const App = () => {
         >
           <Route index element={<Navigate to="dashboard" replace />} />
           <Route path="dashboard" element={<DashboardHome />} />
-          <Route path="my-applications" element={<div></div>} />
           <Route path="add-application" element={<AddApplication />} />
+          <Route path="my-applications" element={<ApplicationList />} />
           <Route path="calendar" element={<div></div>} />
           <Route path="profile" element={<div></div>} />
         </Route>

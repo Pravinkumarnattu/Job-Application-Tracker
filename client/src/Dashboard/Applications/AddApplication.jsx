@@ -29,7 +29,7 @@ const AddApplication = () => {
     try {
       setLoading(true);
       setErrMsg("");
-      const response = await pi.post("/application/add", applicationDetails);
+      const response = await api.post("/application/add", applicationDetails);
       setApplicationDetails({
         company: "",
         role: "",

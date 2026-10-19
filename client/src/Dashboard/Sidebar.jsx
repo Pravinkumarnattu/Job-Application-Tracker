@@ -4,7 +4,7 @@ import { FaUserCircle, FaClipboardList } from "react-icons/fa";
 import { MdHome, MdLogout, MdAddCircle, MdCalendarMonth } from "react-icons/md";
 import { RxHamburgerMenu } from "react-icons/rx";
 import Cookies from "js-cookie";
-import "./Sidebar.css"
+import "./Sidebar.css";
 
 const Sidebar = () => {
   const [showMenu, setShowMenu] = useState(false);
@@ -19,8 +19,10 @@ const Sidebar = () => {
   return (
     <>
       <div className="mobile-header">
-        <img alt="logo" className="mobile-logo" />
-
+        <div style={{ display: "flex", alignItems: "center" }}>
+          <img src="./logo.png" alt="logo" className="mobile-logo" />
+          <h1 className="app-name" style={{margin: "0 10px"}}>JobTrack</h1>
+        </div>
         <button className="menu-btn" onClick={() => setShowMenu(!showMenu)}>
           <RxHamburgerMenu size={25} />
         </button>
@@ -28,7 +30,7 @@ const Sidebar = () => {
 
       <aside className={`sidebar ${showMenu ? "show" : ""}`}>
         <div className="app-name-logo">
-          <img  alt="logo" className="sidebar-logo" />
+          <img src="./logo.png" alt="logo" className="sidebar-logo" />
           <h1 className="app-name">JobTrack</h1>
         </div>
         <NavLink

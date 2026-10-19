@@ -52,8 +52,8 @@ const DashboardHome = () => {
         <Oval
           color="#2563eb"
           secondaryColor="#dbeafe"
-          height={52}
-          width={52}
+          height={42}
+          width={42}
           strokeWidth={4}
         />
         <p>Loading your dashboard...</p>

@@ -13,4 +13,10 @@ router.get(
   require("../controllers/getApplications"),
 );
 
+router.patch(
+  "/update/:id",
+  require("../middleware/auth"),
+  require("../controllers/updateApplicationStatus"),
+);
+
 module.exports = router;
