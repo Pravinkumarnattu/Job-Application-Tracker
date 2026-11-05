@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { MdSearch } from "react-icons/md";
 import { IoChevronDown, IoChevronUp } from "react-icons/io5";
 import api from "../api/axiosInstance";
-import "./Navbar.css"
+import "./Navbar.css";
 
 const Navbar = () => {
   const [searchInput, setSearchInput] = useState("");
@@ -28,6 +28,7 @@ const Navbar = () => {
           onChange={(e) => setSearchInput(e.target.value)}
           placeholder="Search company or role"
         />
+        <button>Search</button>
       </div>
       <div className="navbar-profile">
         <button onClick={() => setDropdownOpen(!dropdownOpen)}>

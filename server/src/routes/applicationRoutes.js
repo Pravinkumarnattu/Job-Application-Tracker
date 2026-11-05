@@ -16,7 +16,13 @@ router.get(
 router.patch(
   "/update/:id",
   require("../middleware/auth"),
-  require("../controllers/updateApplicationStatus"),
+  require("../controllers/updateApplication").updateApplicationStatus,
+);
+
+router.delete(
+  "/delete/:id",
+  require("../middleware/auth"),
+  require("../controllers/updateApplication").deleteApplication,
 );
 
 module.exports = router;
