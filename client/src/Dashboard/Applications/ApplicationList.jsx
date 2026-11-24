@@ -16,7 +16,7 @@ const ApplicationList = () => {
   const [applications, setApplications] = useState([]);
   const [errMsg, setErrMsg] = useState("");
   const [currView, setCurrView] = useState(views.initial);
-  const [stage, setStage] = useState("total");
+  const [stage, setStage] = useState("all");
   const [updatingId, setUpdatingId] = useState(null);
   const [deletingId, setDeletingId] = useState(null);
   const [selectedApplication, setSelectedApplication] = useState(null);
@@ -73,17 +73,14 @@ const ApplicationList = () => {
   const changeStatus = async (id, currValue) => {
     try {
       setUpdatingId(id);
-      await api.patch(`/application/update/${id}`, {
+      await api.patch(`/application/updateStatus/${id}`, {
         newStatus: currValue,
       });
-      const updatedArray = applications.map((app) => {
-        if (app._id === id) {
-          app.status = currValue;
-          return app;
-        }
-        return app;
-      });
-      setApplications(updatedArray);
+      setApplications((prev) =>
+        prev.map((app) =>
+          app._id === id ? { ...app, status: currValue } : app,
+        ),
+      );
       setErrMsg("");
     } catch (err) {
       console.error(err);
@@ -112,15 +109,31 @@ const ApplicationList = () => {
     }
   };
 
-  const closeModel = () => {
-    setSelectedApplication(null);
-  };
-
-  const submitEditedApplication = async (e) => {
+  const submitEditedApplication = async (e, id) => {
     e.preventDefault();
     try {
-      console.log("asdkjlgashg");
-    } catch (err) {}
+      setSaving(id);
+      await api.patch(`/application/editApplication/${id}`, {
+        formData,
+      });
+      setApplications((prev) =>
+        prev.map((app) => (app._id === id ? { ...app, ...formData } : app)),
+      );
+
+      setErrMsg("");
+      closeModel();
+    } catch (err) {
+      console.error(err);
+      setErrMsg(
+        err?.response?.data?.message || "Something went wrong. Try again!",
+      );
+    } finally {
+      setSaving(null);
+    }
+  };
+
+  const closeModel = () => {
+    setSelectedApplication(null);
   };
 
   const myApplications = () => {
@@ -142,6 +155,19 @@ const ApplicationList = () => {
       });
     };
 
+    const tabs = [
+      { key: "all", label: "All", count: total },
+      { key: "applied", label: "Applied", count: applied },
+      { key: "interviewing", label: "Interviewing", count: interviewing },
+      { key: "offer", label: "Offer", count: offer },
+      { key: "rejected", label: "Rejected", count: rejected },
+    ];
+
+    const visibleApplications =
+      stage === "all"
+        ? applications
+        : applications.filter((app) => app.status === stage);
+
     return (
       <main className="applications-container">
         <section className="my-application">
@@ -149,32 +175,21 @@ const ApplicationList = () => {
           <Link to="/add-application">+ Add application</Link>
         </section>
         <p className="err-msg">{errMsg}</p>
-        <ul
-          className="stages"
-          onClick={(e) => {
-            const list = e.target.closest("li");
-            const value = list.textContent.split(" ")[0];
-            setStage(value);
-          }}
-        >
-          <li className={`${stage === "total" ? "active-state" : ""}`}>
-            All <span>{total}</span>
-          </li>
-          <li className={`${stage === "applied" ? "active-state" : ""}`}>
-            Applied <span>{applied}</span>
-          </li>
-          <li className={`${stage === "interviewing" ? "active-state" : ""}`}>
-            Interviewing <span>{interviewing}</span>
-          </li>
-          <li className={`${stage === "offer" ? "active-state" : ""}`}>
-            Offer <span>{offer}</span>
-          </li>
-          <li className={`${stage === "rejected" ? "active-state" : ""}`}>
-            Rejected <span>{rejected}</span>
-          </li>
+        <ul className="application-tabs">
+          {tabs.map((t) => {
+            return (
+              <li
+                key={t.key}
+                className={stage === t.key ? "active-state" : ""}
+                onClick={() => setStage(t.key)}
+              >
+                {t.label} ({t.count})
+              </li>
+            );
+          })}
         </ul>
 
-        {applications.length !== 0 ? (
+        {visibleApplications.length !== 0 ? (
           <div className="applications">
             <table className="applications-table">
               <thead>
@@ -188,7 +203,7 @@ const ApplicationList = () => {
                 </tr>
               </thead>
               <tbody>
-                {applications.map((application) => {
+                {visibleApplications.map((application) => {
                   const {
                     _id,
                     dateApplied,
@@ -236,7 +251,9 @@ const ApplicationList = () => {
                                   .split("T")[0] ||
                                 new Date().toISOString().split("T")[0],
                               jobLink: jobLink || "",
-                              followUpDate: followUpDate || "",
+                              followUpDate: followUpDate
+                                ? followUpDate.split("T")[0]
+                                : "",
                               notes: notes || "",
                             });
                           }}
@@ -255,7 +272,7 @@ const ApplicationList = () => {
           </div>
         ) : (
           <div className="no-applications">
-            <p>You haven't added any applications yet.</p>
+            <p>No applications found.</p>
             <Link to="/add-application">Add application</Link>
           </div>
         )}
@@ -264,7 +281,9 @@ const ApplicationList = () => {
           <div className="modal-overlay" onClick={closeModel}>
             <div className="modal-card" onClick={(e) => e.stopPropagation()}>
               <form
-                onSubmit={submitEditedApplication}
+                onSubmit={(e) =>
+                  submitEditedApplication(e, selectedApplication._id)
+                }
                 className="edit-application"
               >
                 <label htmlFor="company">Company</label>

@@ -14,15 +14,21 @@ router.get(
 );
 
 router.patch(
-  "/update/:id",
+  "/updateStatus/:id",
   require("../middleware/auth"),
-  require("../controllers/updateApplication").updateApplicationStatus,
+  require("../controllers/applicationManipulation").updateApplicationStatus,
 );
 
 router.delete(
   "/delete/:id",
   require("../middleware/auth"),
-  require("../controllers/updateApplication").deleteApplication,
+  require("../controllers/applicationManipulation").deleteApplication,
+);
+
+router.patch(
+  "/editApplication/:id",
+  require("../middleware/auth"),
+  require("../controllers/applicationManipulation").editApplication,
 );
 
 module.exports = router;
