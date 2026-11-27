@@ -93,6 +93,8 @@ const ApplicationList = () => {
   };
 
   const deleteJob = async (id) => {
+    if (!window.confirm("Are you sure you want to delete this application?"))
+      return;
     try {
       setDeletingId(id);
       await api.delete(`/application/delete/${id}`);
@@ -112,7 +114,7 @@ const ApplicationList = () => {
   const submitEditedApplication = async (e, id) => {
     e.preventDefault();
     try {
-      setSaving(id);
+      setSaving(true);
       await api.patch(`/application/editApplication/${id}`, {
         formData,
       });
@@ -121,18 +123,18 @@ const ApplicationList = () => {
       );
 
       setErrMsg("");
-      closeModel();
+      closeModal();
     } catch (err) {
       console.error(err);
       setErrMsg(
         err?.response?.data?.message || "Something went wrong. Try again!",
       );
     } finally {
-      setSaving(null);
+      setSaving(false);
     }
   };
 
-  const closeModel = () => {
+  const closeModal = () => {
     setSelectedApplication(null);
   };
 
@@ -237,32 +239,32 @@ const ApplicationList = () => {
                       <td>{appliedDate}</td>
                       <td>{followUp ? followUp : "-"}</td>
                       <td className="actions-icons">
-                        <FaEdit
-                          size={20}
-                          onClick={() => {
-                            setSelectedApplication(application);
-                            setFormData({
-                              company: company || "",
-                              role: role || "",
-                              status: status || "applied",
-                              dateApplied:
-                                new Date(dateApplied)
-                                  .toISOString()
-                                  .split("T")[0] ||
-                                new Date().toISOString().split("T")[0],
-                              jobLink: jobLink || "",
-                              followUpDate: followUpDate
-                                ? followUpDate.split("T")[0]
-                                : "",
-                              notes: notes || "",
-                            });
-                          }}
-                        />
-                        <FaTrash
-                          size={18}
-                          onClick={() => deleteJob(_id)}
-                          disabled={deletingId === _id}
-                        />
+                        <button type="button" disabled={saving === _id}>
+                          <FaEdit
+                            size={20}
+                            onClick={() => {
+                              setSelectedApplication(application);
+                              setFormData({
+                                company: company || "",
+                                role: role || "",
+                                status: status || "applied",
+                                dateApplied:
+                                  new Date(dateApplied)
+                                    .toISOString()
+                                    .split("T")[0] ||
+                                  new Date().toISOString().split("T")[0],
+                                jobLink: jobLink || "",
+                                followUpDate: followUpDate
+                                  ? followUpDate.split("T")[0]
+                                  : "",
+                                notes: notes || "",
+                              });
+                            }}
+                          />
+                        </button>
+                        <button type="button" disabled={deletingId === _id}>
+                          <FaTrash size={18} onClick={() => deleteJob(_id)} />
+                        </button>
                       </td>
                     </tr>
                   );
@@ -278,7 +280,7 @@ const ApplicationList = () => {
         )}
 
         {selectedApplication && (
-          <div className="modal-overlay" onClick={closeModel}>
+          <div className="modal-overlay" onClick={closeModal}>
             <div className="modal-card" onClick={(e) => e.stopPropagation()}>
               <form
                 onSubmit={(e) =>
@@ -396,6 +398,13 @@ const ApplicationList = () => {
                   className="save-changes-btn"
                 >
                   {saving ? "Saving..." : "Save Changes"}
+                </button>
+                <button
+                  type="button"
+                  onClick={closeModal}
+                  className="cancel-btn"
+                >
+                  Cancel
                 </button>
               </form>
             </div>

@@ -6,7 +6,7 @@ const GoogleAuthButton = () => {
       client_id: import.meta.env.VITE_GOOGLE_CLIENT_ID,
       redirect_uri: import.meta.env.VITE_GOOGLE_REDIRECT_URI,
       response_type: "code",
-      scope: "email profile",
+      scope: "email profile https://www.googleapis.com/auth/calendar.events",
       access_type: "offline",
       prompt: "consent",
     });
